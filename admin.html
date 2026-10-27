@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewPoint - Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="admin">
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="logo">☕ <span>BrewPoint</span></div>
+            <p class="role-label">ADMIN</p>
+            <nav>
+                <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+                <button class="nav-btn" data-section="users">Users</button>
+                <button class="nav-btn" data-section="products">Products</button>
+                <button class="nav-btn" data-section="inventory">Inventory</button>
+                <button class="nav-btn" data-section="reports">Sales Reports</button>
+                <button class="nav-btn" data-section="receipts">Receipts</button>
+            </nav>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">BrewPoint Coffee Shop</p>
+                    <h1>Admin Dashboard</h1>
+                </div>
+                <div id="userInfo" class="user-info"></div>
+            </header>
+
+            <!-- ==================== DASHBOARD ==================== -->
+            <section id="dashboardSection" class="page-section active">
+                <div class="stat-grid">
+                    <div class="stat-card"><span>Total Products</span><strong id="totalProducts">0</strong></div>
+                    <div class="stat-card"><span>Low Stock</span><strong id="lowStock">0</strong></div>
+                    <div class="stat-card"><span>Today's Orders</span><strong id="todayOrders">0</strong></div>
+                    <div class="stat-card"><span>Today's Sales</span><strong id="todaySales">₱0.00</strong></div>
+                </div>
+
+                <div class="stat-grid" style="margin-top: 12px;">
+                    <div class="stat-card"><span>Out of Stock</span><strong id="outOfStock">0</strong></div>
+                    <div class="stat-card"><span>All-Time Orders</span><strong id="allTimeOrders">0</strong></div>
+                    <div class="stat-card"><span>All-Time Sales</span><strong id="allTimeSales">₱0.00</strong></div>
+                    <div class="stat-card"><span>Active Products</span><strong id="activeProducts">0</strong></div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+                    <div class="panel">
+                        <div class="panel-title"><h2>Low / Out of Stock</h2></div>
+                        <div id="dashboardLowStockList" style="max-height: 260px; overflow-y: auto;">
+                            <p style="color: var(--text-muted); font-size: 14px;">Loading…</p>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title"><h2>Recent Orders</h2></div>
+                        <div id="dashboardRecentOrders" style="max-height: 260px; overflow-y: auto;">
+                            <p style="color: var(--text-muted); font-size: 14px;">Loading…</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel" style="margin-top: 20px;">
+                    <div class="panel-title"><h2>Quick Actions</h2></div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <button class="primary-btn dash-goto" data-section="products">+ Add Product</button>
+                        <button class="secondary-btn dash-goto" data-section="inventory">Check Inventory</button>
+                        <button class="secondary-btn dash-goto" data-section="reports">View Sales Reports</button>
+                        <button class="secondary-btn dash-goto" data-section="receipts">View Receipts</button>
+                        <button class="secondary-btn dash-goto" data-section="users">Manage Users</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== USERS ==================== -->
+            <section id="usersSection" class="page-section">
+                <div class="panel">
+                    <div class="panel-title">
+                        <h2>Manage Users</h2>
+                        <button id="refreshUsers" class="small-btn">Refresh</button>
+                    </div>
+                    <p class="hint">Create accounts here. New users can log in with the email and password you set. Staff accounts (Cashier / Barista) are private to your admin account — other admins cannot see or change them. When you registered, a dedicated Cashier and Barista were already created for you (default passwords: Cashier123 / Barista123). You can change their passwords anytime with “Set Password”.</p>
+
+                    <!-- Add User Form -->
+                    <div class="form-grid" style="margin-bottom: 12px;">
+                        <input id="newUserName" placeholder="Full name">
+                        <input id="newUserEmail" type="email" placeholder="Email">
+                        <input id="newUserPassword" type="password" placeholder="Password (min 8 chars)" minlength="8">
+                        <select id="newUserRole">
+                            <option value="cashier">Cashier</option>
+                            <option value="barista">Barista</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="button-row" style="margin-bottom: 20px;">
+                        <button id="addUserBtn" class="primary-btn">+ Add User</button>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PRODUCTS ==================== -->
+            <section id="productsSection" class="page-section">
+                <div class="panel">
+                    <div class="panel-title">
+                        <h2>Manage Products</h2>
+                        <button id="addProductBtn" class="primary-btn">+ Add Product</button>
+                    </div>
+                        <div class="form-grid">
+                        <input id="productName" placeholder="Product name">
+                        <input id="productCategory" placeholder="Category">
+                        <input id="productPrice" type="number" min="0" step="0.01" placeholder="Price">
+                        <input id="productStock" type="number" min="0" placeholder="Stock">
+                        <input id="productImage" placeholder="Image URL (optional)">
+                        <input id="productIngredients" placeholder="Ingredients (e.g. Espresso, Milk, Caramel syrup)" style="grid-column: 1 / -1;">
+                    </div>
+                    <div style="margin: 12px 0 4px;">
+                        <label for="productImageFile" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Or upload image from computer</label>
+                        <input id="productImageFile" type="file" accept="image/*" style="display: block; margin-top: 8px; width: 100%; max-width: 320px;">
+                        <img id="productImagePreview" alt="Preview" style="display: none; margin-top: 10px; max-height: 120px; border-radius: 10px; border: 1px solid var(--border);">
+                    </div>
+                    <input type="hidden" id="editingProductId">
+                    <div class="button-row">
+                        <button id="saveProductBtn" class="primary-btn">Save Product</button>
+                        <button id="cancelProductBtn" class="secondary-btn hidden">Cancel</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Action</th></tr></thead>
+                            <tbody id="productsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== INVENTORY ==================== -->
+            <section id="inventorySection" class="page-section">
+                <div class="panel">
+                    <div class="panel-title"><h2>Inventory</h2></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Product</th><th>Ingredients</th><th>Stock</th><th>Level</th><th>Adjustment</th></tr></thead>
+                            <tbody id="inventoryTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== SALES REPORTS ==================== -->
+            <section id="reportsSection" class="page-section">
+                <div class="panel">
+                    <div class="panel-title">
+                        <h2>Sales Reports</h2>
+                        <button id="deleteAllOrdersBtn" class="small-btn" style="background: var(--danger-bg); color: var(--danger); font-weight: 600;">
+                            Delete All
+                        </button>
+                    </div>
+
+                    <div class="category-row" id="salesPeriodButtons" style="margin-bottom: 16px;">
+                        <button class="category-btn active" data-period="all">All Sales</button>
+                        <button class="category-btn" data-period="daily">Daily</button>
+                        <button class="category-btn" data-period="weekly">Weekly</button>
+                        <button class="category-btn" data-period="monthly">Monthly</button>
+                        <button class="category-btn" data-period="yearly">Yearly</button>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-card"><span>Orders</span><strong id="reportOrders">0</strong></div>
+                        <div class="stat-card"><span>Total Sales</span><strong id="reportSales">₱0.00</strong></div>
+                        <div class="stat-card"><span>Cash</span><strong id="reportCash">₱0.00</strong></div>
+                        <div class="stat-card"><span>GCash</span><strong id="reportCard">₱0.00</strong></div>
+                    </div>
+
+                    <p id="salesPeriodLabel" style="margin: 12px 0 8px; color: #666; font-size: 0.9rem;">Showing: All sales</p>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Payment</th>
+                                    <th>Cashier</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== RECEIPTS ==================== -->
+            <section id="receiptsSection" class="page-section">
+                <div class="panel">
+                    <div class="panel-title">
+                        <h2>All Paid Receipts</h2>
+                        <button id="deleteAllReceiptsBtn" class="small-btn" style="background: var(--danger-bg); color: var(--danger); font-weight: 600;">
+                            Delete All
+                        </button>
+                    </div>
+                    <div id="adminReceiptList" class="order-list"></div>
+                </div>
+            </section>
+
+            <p id="adminMessage" class="message"></p>
+        </main>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-card confirm-modal-card">
+            <div class="confirm-icon">⚠️</div>
+            <h2 id="confirmTitle">Confirm Action</h2>
+            <p id="confirmMessage">Are you sure you want to proceed?</p>
+            <div class="confirm-actions">
+                <button id="confirmCancelBtn" class="secondary-btn">Cancel</button>
+                <button id="confirmOkBtn" class="primary-btn danger-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="promptModal" class="modal hidden">
+        <div class="modal-card">
+            <button id="promptCloseBtn" class="modal-close">×</button>
+            <h2 id="promptTitle">Adjust Stock</h2>
+            <p id="promptMessage" class="hint" style="margin-bottom: 12px;">Enter the new stock quantity.</p>
+            <label for="promptInput">New Stock Quantity</label>
+            <input id="promptInput" type="number" min="0" step="1" placeholder="e.g. 25">
+            <div class="confirm-actions" style="margin-top: 20px;">
+                <button id="promptCancelBtn" class="secondary-btn">Cancel</button>
+                <button id="promptOkBtn" class="primary-btn">Update Stock</button>
+            </div>
+        </div>
+    </div>
+        <!-- Set New Password Modal -->
+    <div id="passwordModal" class="modal hidden">
+        <div class="modal-card">
+            <button id="passwordCloseBtn" class="modal-close">×</button>
+            <h2>Set New Password</h2>
+            <p class="hint" style="margin-bottom: 12px;" id="passwordModalHint">Enter a new password for this user.</p>
+            <label for="newPasswordInput">New Password</label>
+            <input id="newPasswordInput" type="password" minlength="8" placeholder="Min 8 characters">
+            <label for="confirmPasswordInput">Confirm Password</label>
+            <input id="confirmPasswordInput" type="password" minlength="8" placeholder="Confirm password">
+            <p id="passwordModalError" class="message hidden" style="margin-top: 10px;"></p>
+            <div class="confirm-actions" style="margin-top: 20px;">
+                <button id="passwordCancelBtn" class="secondary-btn">Cancel</button>
+                <button id="passwordOkBtn" class="primary-btn">Save Password</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>

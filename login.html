@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#F8F3EC">
+    <title>BrewPoint Sales System - Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <main class="login-page">
+
+        <!-- LEFT: BRANDING AND COFFEE IMAGE -->
+        <aside class="branding-panel">
+            <div class="branding-top">
+                <div class="branding-logo" aria-hidden="true">☕</div>
+                <div>
+                    <div class="branding-name">BrewPoint</div>
+                    <div class="branding-subtitle">Coffee Shop Sales System</div>
+                </div>
+            </div>
+
+            <div class="branding-content">
+                <span class="branding-badge">
+                    ☕ SPECIALTY COFFEE Sales System
+                </span>
+
+                <h2>Run your coffee shop with clarity and control.</h2>
+
+                <p>Serve every customer faster. Track every order.
+                   Grow your coffee shop with BrewPoint keeps your café running smoothly..
+                </p>
+
+                <div class="branding-features">
+                    <div class="feature-item">
+                        <strong>Fast</strong>
+                        <span>Checkout flow</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <strong>Live</strong>
+                        <span>Order queue</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <strong>Clear</strong>
+                        <span>Sales reports</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="branding-footer">
+                MADE FOR YOUR DAILY COFFEE BUSINESS
+            </div>
+        </aside>
+
+        <!-- RIGHT: LOGIN AND REGISTRATION -->
+        <section class="login-panel">
+            <div class="login-card">
+
+                <!-- BRAND -->
+                <div class="brand">
+                    <div class="brand-icon" aria-hidden="true">☕</div>
+                    <div>
+                        <h1>BrewPoint</h1>
+                        <p>Coffee Shop Sales System</p>
+                    </div>
+                </div>
+
+                <!-- LOGIN HEADING -->
+                <div class="auth-heading">
+                    <h2>Sign in to continue</h2>
+                    <p>Enter your credentials to access your dashboard.</p>
+                </div>
+
+                <!-- LOGIN FORM: EXISTING IDs PRESERVED -->
+                <form id="loginForm">
+                    <label for="email">Email</label>
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="name@brewpoint.com"
+                        autocomplete="username"
+                        required
+                    >
+
+                    <label for="password">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button type="submit">Sign In</button>
+
+                    <p id="loginMessage" class="message" aria-live="polite"></p>
+                </form>
+
+                <!-- REGISTER ADMIN FORM: EXISTING IDs PRESERVED -->
+                <form id="registerForm" class="hidden">
+                    <div class="auth-heading">
+                        <h2>Create your admin account</h2>
+                        <p>Enter your details to register as an administrator.</p>
+                    </div>
+
+                    <label for="regName">Full Name</label>
+                    <input
+                        id="regName"
+                        type="text"
+                        placeholder="Enter full name"
+                        autocomplete="name"
+                        required
+                    >
+
+                    <label for="regEmail">Email</label>
+                    <input
+                        id="regEmail"
+                        type="email"
+                        placeholder="Enter email"
+                        autocomplete="email"
+                        required
+                    >
+
+                    <label for="regPassword">Password</label>
+                    <input
+                        id="regPassword"
+                        type="password"
+                        placeholder="Min 8 characters"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <label for="regConfirm">Confirm Password</label>
+                    <input
+                        id="regConfirm"
+                        type="password"
+                        placeholder="Confirm password"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <p class="hint"
+                       style="font-size:12px;color:#8B6F5A;margin:8px 0 0;">
+                        This form creates an <strong>Admin</strong> account only.
+                    </p>
+
+                    <button type="submit">Create Admin Account</button>
+
+                    <p id="registerMessage" class="message" aria-live="polite"></p>
+                </form>
+
+                <!-- AUTH MODE TOGGLE: EXISTING ID PRESERVED -->
+                <div class="auth-toggle">
+                    <button
+                        type="button"
+                        id="toggleAuthMode"
+                        class="link-btn"
+                    >
+                        Don't have an admin account? Register
+                    </button>
+                </div>
+
+                <!-- FOOTER NOTE -->
+                <div class="demo-note">
+                    <strong>BREW POINT</strong>
+                    <span>Welcome to BP Sales System — sign in to manage your shop.</span>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- KEEP THE EXISTING AUTHENTICATION SCRIPT -->
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>

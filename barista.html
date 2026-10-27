@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewPoint - Barista Display</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="barista">
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="logo">☕ <span>BrewPoint</span></div>
+            <p class="role-label">BARISTA</p>
+            <nav>
+                <button class="nav-btn active" data-section="incomingOrders">Kitchen Queue</button>
+            </nav>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">BrewPoint Coffee Shop</p>
+                    <h1>Barista Kitchen Display</h1>
+                </div>
+                <div id="userInfo" class="user-info"></div>
+            </header>
+
+            <p id="baristaMessage" class="message hidden"></p>
+
+            <section id="incomingOrdersSection" class="page-section active">
+                <div class="panel">
+                    <div class="panel-title">
+                        <h2>Incoming Drink Orders</h2>
+                    </div>
+                    <div id="baristaOrderGrid" class="order-grid"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="js/barista.js"></script>
+</body>
+</html>

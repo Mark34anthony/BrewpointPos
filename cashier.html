@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewPoint - Cashier</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-role="cashier">
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="logo">☕ <span>BrewPoint</span></div>
+            <p class="role-label">CASHIER</p>
+            <nav>
+                <button class="nav-btn active" data-section="newOrder">New Order</button>
+                <button class="nav-btn" data-section="cashierOrders">Orders</button>
+                <button class="nav-btn" data-section="receipts">Receipts</button>
+            </nav>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">BrewPoint Coffee Shop</p>
+                    <h1>Cashier Dash Sale</h1>
+                </div>
+                <div id="userInfo" class="user-info"></div>
+            </header>
+
+            <p id="cashierMessage" class="message hidden"></p>
+
+            <section id="newOrderSection" class="page-section active">
+                <div class="pos-layout">
+                    <div class="panel product-panel">
+                        <div class="panel-title">
+                            <h2>Products</h2>
+                            <input id="productSearch" class="search-input" placeholder="Search products...">
+                        </div>
+                        <div id="categoryButtons" class="category-row"></div>
+                        <div id="productGrid" class="product-grid"></div>
+                    </div>
+
+                    <div class="panel cart-panel">
+                        <div class="panel-title">
+                            <h2>Current Order</h2>
+                            <button id="clearCartBtn" class="small-btn">Clear</button>
+                        </div>
+                        <div id="cartItems" class="cart-items"></div>
+                        <div class="totals">
+                            <div><span>Subtotal</span><strong id="cartSubtotal">₱0.00</strong></div>
+                            <div class="grand-total"><span>Total</span><strong id="cartTotal">₱0.00</strong></div>
+                        </div>
+                        <button id="checkoutBtn" class="primary-btn wide">Proceed to Payment</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cashierOrdersSection" class="page-section hidden">
+                <div class="panel">
+                    <div class="panel-title"><h2>Orders</h2></div>
+                    <div id="cashierOrderList" class="order-list"></div>
+                </div>
+            </section>
+
+            <section id="receiptsSection" class="page-section hidden">
+                <div class="panel">
+                    <div class="panel-title"><h2>Recent Receipts</h2></div>
+                    <div id="receiptList" class="order-list"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Payment -->
+    <div id="paymentModal" class="modal hidden">
+        <div class="modal-card">
+            <button id="closePayment" class="modal-close">×</button>
+            <h2>Process Payment</h2>
+            <p>Total: <strong id="paymentTotal">₱0.00</strong></p>
+
+            <label for="customerName">Customer Name</label>
+            <input id="customerName" type="text" placeholder="Enter customer name (optional)">
+
+            <label for="orderType">Order Type</label>
+            <select id="orderType">
+                <option value="Dine In">Dine In</option>
+                <option value="Take Out">Take Out</option>
+            </select>
+
+            <label for="paymentMethod">Payment Method</label>
+            <select id="paymentMethod">
+                <option value="Cash">Cash</option>
+                <option value="GCash">GCash</option>
+            </select>
+
+            <div id="cashPaymentFields">
+                <label for="cashReceived">Cash Received</label>
+                <input id="cashReceived" type="number" min="0" step="0.01" placeholder="Enter cash received">
+                <p>Change: <strong id="changeAmount">₱0.00</strong></p>
+            </div>
+
+            <div id="cardPaymentFields" class="hidden">
+                <div class="notice">GCash payment is simulated for this school project.</div>
+            </div>
+            
+             <p id="paymentError" class="message hidden" style="margin: 8px 0 0;"></p>
+
+            <button id="confirmPaymentBtn" class="primary-btn wide">Confirm Payment</button>
+        </div>
+    </div>
+
+    <div id="receiptModal" class="modal hidden">
+        <div class="modal-card receipt-success-card">
+            <button id="closeReceiptModal" class="modal-close">×</button>
+
+            <div class="receipt-success-header">
+                <div class="success-icon">✓</div>
+                <h2>Payment Successful</h2>
+                <p class="receipt-order-no">Order <strong id="receiptOrderNumber">—</strong></p>
+            </div>
+
+            <div class="receipt-preview" id="receiptPreview"></div>
+
+            <div class="receipt-actions">
+                <button id="printReceiptBtn" class="primary-btn wide">
+                    🖨️ Print Receipt
+                </button>
+                <button id="updateOrderBtn" class="secondary-btn wide">
+                    Update Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/cashier.js"></script>
+</body>
+</html>
